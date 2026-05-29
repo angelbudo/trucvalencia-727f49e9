@@ -31,27 +31,44 @@ export function UsernameField({
     if (u === (current ?? "")) {
       setAvailable(null);
       setFormatErr(null);
+      setChecking(false);
       return;
     }
     const err = validateUsernameFormat(u);
     setFormatErr(err);
     if (err) {
       setAvailable(null);
+      setChecking(false);
       return;
     }
     if (debounceRef.current) window.clearTimeout(debounceRef.current);
     setChecking(true);
-    debounceRef.current = window.setTimeout(async () => {
-      try {
-        const ok = await isUsernameAvailable(u);
-        setAvailable(ok);
-      } catch {
+    let cancelled = false;
+    debounceRef.current = window.setTimeout(() => {
+      // Hard safety timeout: si la consulta no respon en 4s, deixem
+      // que l'usuari pugui desar igualment (el servidor validarà).
+      const safety = window.setTimeout(() => {
+        if (cancelled) return;
         setAvailable(null);
-      } finally {
         setChecking(false);
-      }
+      }, 4000);
+      isUsernameAvailable(u)
+        .then((ok) => {
+          if (cancelled) return;
+          setAvailable(ok);
+        })
+        .catch(() => {
+          if (cancelled) return;
+          setAvailable(null);
+        })
+        .finally(() => {
+          window.clearTimeout(safety);
+          if (cancelled) return;
+          setChecking(false);
+        });
     }, 400);
     return () => {
+      cancelled = true;
       if (debounceRef.current) window.clearTimeout(debounceRef.current);
     };
   }, [draft, editing, current]);
