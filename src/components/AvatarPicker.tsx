@@ -96,7 +96,7 @@ export function AvatarPicker({ userId, currentUrl, displayName, onChanged }: Pro
       </DialogTrigger>
       <DialogContent className="w-[90vw] sm:max-w-md max-h-[85vh] overflow-y-auto rounded-2xl border-primary/30">
         <DialogHeader>
-          <DialogTitle className="text-gold font-title font-black italic">Foto de perfil</DialogTitle>
+          <DialogTitle className="text-gold font-title font-black italic text-2xl text-center">Foto de perfil</DialogTitle>
         </DialogHeader>
 
         <div className="flex flex-col gap-4">
