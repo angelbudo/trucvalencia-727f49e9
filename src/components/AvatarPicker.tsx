@@ -106,6 +106,7 @@ export function AvatarPicker({ userId, currentUrl, displayName, onChanged }: Pro
               variant="outline"
               disabled={busy}
               onClick={() => cameraRef.current?.click()}
+              className="bg-team-nos text-background hover:bg-team-nos/90 border-transparent"
             >
               <Camera className="w-4 h-4 mr-2" /> Càmera
             </Button>
@@ -114,6 +115,7 @@ export function AvatarPicker({ userId, currentUrl, displayName, onChanged }: Pro
               variant="outline"
               disabled={busy}
               onClick={() => galleryRef.current?.click()}
+              className="bg-accent text-accent-foreground hover:bg-accent/90 border-transparent"
             >
               <ImageIcon className="w-4 h-4 mr-2" /> Galeria
             </Button>
