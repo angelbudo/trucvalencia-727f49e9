@@ -103,7 +103,7 @@ export function UsernameField({
   return (
     <div className="rounded-md border border-primary/25 bg-background/40 p-3 space-y-2">
       <div className="font-display font-bold text-sm text-foreground flex items-center gap-1">
-        <AtSign className="w-4 h-4" /> Nom d'usuari (públic, únic)
+        <AtSign className="w-4 h-4" /> Nom d'usuari únic
       </div>
       <div className="flex items-center gap-2">
         <Input
