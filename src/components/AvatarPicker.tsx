@@ -38,19 +38,51 @@ export function AvatarPicker({ userId, currentUrl, displayName, onChanged }: Pro
     onChanged(url);
   }
 
+  async function compressImage(file: File, maxSize = 100, quality = 0.8): Promise<Blob> {
+    const dataUrl: string = await new Promise((resolve, reject) => {
+      const r = new FileReader();
+      r.onload = () => resolve(r.result as string);
+      r.onerror = () => reject(r.error);
+      r.readAsDataURL(file);
+    });
+    const img: HTMLImageElement = await new Promise((resolve, reject) => {
+      const i = new Image();
+      i.onload = () => resolve(i);
+      i.onerror = () => reject(new Error("No s'ha pogut carregar la imatge"));
+      i.src = dataUrl;
+    });
+    const ratio = Math.min(1, maxSize / Math.max(img.width, img.height));
+    const w = Math.max(1, Math.round(img.width * ratio));
+    const h = Math.max(1, Math.round(img.height * ratio));
+    const canvas = document.createElement("canvas");
+    canvas.width = w;
+    canvas.height = h;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) throw new Error("Canvas no disponible");
+    ctx.drawImage(img, 0, 0, w, h);
+    const blob: Blob = await new Promise((resolve, reject) => {
+      canvas.toBlob(
+        (b) => (b ? resolve(b) : reject(new Error("No s'ha pogut comprimir"))),
+        "image/jpeg",
+        quality,
+      );
+    });
+    return blob;
+  }
+
   async function handleFile(file: File) {
     if (!file) return;
-    if (file.size > 5 * 1024 * 1024) {
-      toast.error("La imatge ha de pesar menys de 5 MB");
+    if (file.size > 20 * 1024 * 1024) {
+      toast.error("La imatge ha de pesar menys de 20 MB");
       return;
     }
     setBusy(true);
     try {
-      const ext = (file.name.split(".").pop() || "jpg").toLowerCase().replace(/[^a-z0-9]/g, "");
-      const path = `${userId}/avatar-${Date.now()}.${ext}`;
+      const blob = await compressImage(file, 100, 0.8);
+      const path = `${userId}/avatar-${Date.now()}.jpg`;
       const { error: upErr } = await supabase.storage
         .from("avatars")
-        .upload(path, file, { upsert: true, contentType: file.type || "image/jpeg" });
+        .upload(path, blob, { upsert: true, contentType: "image/jpeg" });
       if (upErr) throw upErr;
       const { data } = supabase.storage.from("avatars").getPublicUrl(path);
       await persist(data.publicUrl);
