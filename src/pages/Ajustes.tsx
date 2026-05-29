@@ -104,7 +104,7 @@ function Ajustes() {
 
         <header className="text-center">
           <h1 className="font-title font-black italic text-gold text-2xl text-center pr-1.5">{t("settings.title")}</h1>
-          <p className="mt-0.5 text-sm text-muted-foreground">{t("settings.subtitle")}</p>
+          <p className="mt-0.5 text-sm text-[#c2b9a3]">{t("settings.subtitle")}</p>
         </header>
 
         <Section title={t("settings.your_name")}>
