@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "@/lib/router-shim";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ClientOnly } from "@/components/ClientOnly";
 import { Button } from "@/components/ui/button";
 import { usePlayerIdentity } from "@/hooks/usePlayerIdentity";
