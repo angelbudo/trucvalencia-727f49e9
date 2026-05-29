@@ -177,7 +177,7 @@ export function AvatarPicker({ userId, currentUrl, displayName, onChanged }: Pro
 
           {busy && (
             <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
-              <Loader2 className="w-4 h-4 animate-spin" /> Desant…
+              <Loader2 className="w-4 h-4 animate-spin" /> Guardant…
             </div>
           )}
         </div>
