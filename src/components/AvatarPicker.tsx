@@ -145,7 +145,7 @@ export function AvatarPicker({ userId, currentUrl, displayName, onChanged }: Pro
           </div>
 
           <div>
-            <div className="text-[10px] font-sans tracking-widest uppercase text-primary/85 mb-2">
+            <div className="font-title font-bold text-base text-white mb-2 [&]:!font-[Cinzel,serif]">
               O tria un avatar
             </div>
             <div className="avatar-scroll max-h-[50vh] overflow-y-auto pr-2">
