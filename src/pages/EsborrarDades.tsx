@@ -204,31 +204,36 @@ const EsborrarDades = () => {
 
   return (
     <main className="min-h-screen px-5 py-8 bg-background text-foreground">
-      <div className="w-full max-w-2xl mx-auto flex flex-col gap-6">
-        <header className="flex items-center justify-between gap-3">
-          <p className="text-xs text-muted-foreground">{T.headerSub}</p>
-          <div className="flex items-center justify-between">
-            <ShareAppButton />
-            <Button onClick={() => navigate("/")} size="sm" variant="outline" className="h-8 w-8 p-0 border-foreground/80 text-foreground hover:bg-foreground/10" aria-label={T.backHome} title={T.backHome}>
-              <LogOut className="w-4 h-4" />
-            </Button>
-          </div>
-        </header>
+      <div className="w-full max-w-lg mx-auto flex flex-col gap-4">
+        <div className="flex items-center justify-between">
+          <ShareAppButton />
+          <Button
+            onClick={() => navigate("/")}
+            size="sm"
+            variant="outline"
+            className="h-8 w-8 p-0 border-foreground/80 text-foreground hover:bg-foreground/10"
+            aria-label={T.backHome}
+            title={T.backHome}
+          >
+            <LogOut className="w-4 h-4" />
+          </Button>
+        </div>
 
-        <article className="prose prose-sm md:prose-base max-w-none text-foreground">
-          <h1 className="font-display font-black italic text-gold text-3xl md:text-4xl normal-case mb-2">{T.title}</h1>
+        <article className="max-w-none text-foreground [&_p]:text-[12px] [&_p]:leading-relaxed [&_ul]:text-[12px] [&_ul]:leading-relaxed [&_li]:text-[12px] [&_li]:leading-relaxed">
+          <p className="text-xs text-muted-foreground">{T.headerSub}</p><br/>
+          <h1 className="font-title font-black italic text-gold text-2xl normal-case mb-2">{T.title}</h1>
           <p className="text-muted-foreground">{T.intro}</p>
 
           <section className="mt-6">
-            <h2 className="font-display font-bold text-xl mt-4 mb-2">{T.h2What}</h2>
+            <h2 className="font-display font-bold text-base mt-4 mb-2">{T.h2What}</h2>
             <ul className="list-disc pl-6 my-3 space-y-1">
               {T.whatList.map((item, i) => <li key={i}>{item}</li>)}
             </ul>
           </section>
 
           <section className="mt-6">
-            <h2 className="font-display font-bold text-xl mt-4 mb-2">{T.h2Consent}</h2>
-            <div className="rounded-md border border-border bg-muted/20 p-4 text-sm space-y-2">
+            <h2 className="font-display font-bold text-base mt-4 mb-2">{T.h2Consent}</h2>
+            <div className="rounded-md border border-border bg-muted/20 p-4 text-[12px] space-y-2">
               <p className="font-medium">{T.consentLead}</p>
               <ol className="list-decimal pl-5 space-y-1">
                 {T.consentItems.map((item, i) => <li key={i}>{item}</li>)}
@@ -237,22 +242,22 @@ const EsborrarDades = () => {
           </section>
 
           <section className="mt-6">
-            <h2 className="font-display font-bold text-xl mt-4 mb-2">{T.h2GetId}</h2>
+            <h2 className="font-display font-bold text-base mt-4 mb-2">{T.h2GetId}</h2>
             <p>{T.getIdP}</p>
-            <p className="text-sm text-muted-foreground">{T.getIdSmall}</p>
+            <p className="text-[10px] text-muted-foreground">{T.getIdSmall}</p>
           </section>
 
           <section className="mt-6">
-            <h2 className="font-display font-bold text-xl mt-4 mb-2">{T.h2Form}</h2>
+            <h2 className="font-display font-bold text-base mt-4 mb-2">{T.h2Form}</h2>
             {step === "input" && (
               <form onSubmit={onPreview} className="not-prose flex flex-col gap-3">
-                <label htmlFor="deviceId" className="text-sm font-medium">{T.label}</label>
+                <label htmlFor="deviceId" className="text-[12px] font-medium">{T.label}</label>
                 <Input id="deviceId" type="text" value={deviceId} onChange={(e) => setDeviceId(e.target.value)} placeholder="p. ej. 3f8a1c20-…" autoComplete="off" disabled={loading} className="bg-background/40 border-primary/30" />
                 {!looksValid && trimmed.length > 0 && (
-                  <p className="text-xs text-destructive">{T.invalidFormat}</p>
+                  <p className="text-[10px] text-destructive">{T.invalidFormat}</p>
                 )}
                 {error && (
-                  <p className="text-sm text-destructive flex items-center gap-2">
+                  <p className="text-[12px] text-destructive flex items-center gap-2">
                     <ShieldAlert className="w-4 h-4" /> {error}
                   </p>
                 )}
@@ -260,26 +265,26 @@ const EsborrarDades = () => {
                   {loading ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Eye className="w-4 h-4 mr-2" />}
                   {T.btnCheck}
                 </Button>
-                <p className="text-xs text-muted-foreground">{T.note}</p>
+                <p className="text-[10px] text-muted-foreground">{T.note}</p>
               </form>
             )}
 
             {step === "preview" && preview && (
               <div className="not-prose flex flex-col gap-4">
-                <div className="rounded-md border border-primary/30 bg-primary/5 p-3 text-sm">
-                  <p className="text-xs text-muted-foreground">{T.deviceIdentLabel}</p>
-                  <p className="font-mono text-xs break-all mt-1">{trimmed}</p>
+                <div className="rounded-md border border-primary/30 bg-primary/5 p-3 text-[12px]">
+                  <p className="text-[10px] text-muted-foreground">{T.deviceIdentLabel}</p>
+                  <p className="font-mono text-[10px] break-all mt-1">{trimmed}</p>
                 </div>
 
                 {!hasAnyData ? (
-                  <div className="rounded-md border border-border bg-muted/30 p-3 text-sm">
+                  <div className="rounded-md border border-border bg-muted/30 p-3 text-[12px]">
                     <p className="font-medium">{T.noData}</p>
-                    <p className="text-xs text-muted-foreground mt-1">{T.noDataSub}</p>
+                    <p className="text-[10px] text-muted-foreground mt-1">{T.noDataSub}</p>
                   </div>
                 ) : (
-                  <div className="rounded-md border border-destructive/40 bg-destructive/5 p-3 text-sm flex flex-col gap-2">
+                  <div className="rounded-md border border-destructive/40 bg-destructive/5 p-3 text-[12px] flex flex-col gap-2">
                     <p className="font-medium text-destructive">{T.deleteLead}</p>
-                    <ul className="text-xs space-y-1 ml-4 list-disc">
+                    <ul className="text-[10px] space-y-1 ml-4 list-disc">
                       {Object.entries(preview.deleted).filter(([, n]) => n > 0).map(([t, n]) => (
                         <li key={t}><strong>{n}</strong> {labelForTable(t, isEs)}</li>
                       ))}
@@ -291,14 +296,14 @@ const EsborrarDades = () => {
                 )}
 
                 {hasAnyData && (
-                  <label className="flex items-start gap-2 text-sm">
+                  <label className="flex items-start gap-2 text-[12px]">
                     <input type="checkbox" checked={confirmed} onChange={(e) => setConfirmed(e.target.checked)} disabled={loading} className="mt-1" />
                     <span>{T.confirmCheck}</span>
                   </label>
                 )}
 
                 {error && (
-                  <p className="text-sm text-destructive flex items-center gap-2">
+                  <p className="text-[12px] text-destructive flex items-center gap-2">
                     <ShieldAlert className="w-4 h-4" /> {error}
                   </p>
                 )}
@@ -318,12 +323,12 @@ const EsborrarDades = () => {
             )}
 
             {step === "done" && result && (
-              <div className="not-prose rounded-md border border-team-nos/40 bg-team-nos/10 p-4 text-sm flex flex-col gap-2">
-                <p className="flex items-center gap-2 font-medium text-team-nos text-base">
+              <div className="not-prose rounded-md border border-team-nos/40 bg-team-nos/10 p-4 text-[12px] flex flex-col gap-2">
+                <p className="flex items-center gap-2 font-medium text-team-nos text-[14px]">
                   <CheckCircle2 className="w-5 h-5" /> {T.doneTitle}
                 </p>
-                <p className="text-sm">{T.doneP}</p>
-                <ul className="text-xs ml-4 list-disc space-y-0.5 text-muted-foreground">
+                <p className="text-[12px]">{T.doneP}</p>
+                <ul className="text-[10px] ml-4 list-disc space-y-0.5 text-muted-foreground">
                   {Object.entries(result.deleted).filter(([, n]) => n > 0).map(([t, n]) => (
                     <li key={t}>{T.deletedPrefix} <strong>{n}</strong> {labelForTable(t, isEs)}</li>
                   ))}
@@ -332,24 +337,15 @@ const EsborrarDades = () => {
                   ))}
                   {totalToDelete + totalToAnonymize === 0 && <li>{T.noneFound}</li>}
                 </ul>
-                <p className="text-xs text-muted-foreground mt-2">{T.doneSmall}</p>
+                <p className="text-[10px] text-muted-foreground mt-2">{T.doneSmall}</p>
               </div>
             )}
           </section>
 
-          <section className="mt-8 text-sm text-muted-foreground">
+          <section className="mt-8 text-[12px] text-muted-foreground">
             <p>{T.moreInfo}</p>
           </section>
         </article>
-
-        <footer className="pt-6 border-t border-border">
-          <Button asChild variant="outline" className="w-full border-2">
-            <Link to="/">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              {T.backFooter}
-            </Link>
-          </Button>
-        </footer>
       </div>
     </main>
   );
