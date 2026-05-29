@@ -254,7 +254,7 @@ function Ajustes() {
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section className="flex flex-col gap-1.5">
-      <div className="font-display font-bold text-base text-gold mt-4 mb-2">{title}</div>
+      <div className="font-display font-bold text-base text-white mt-4 mb-2">{title}</div>
       {children}
     </section>
   );

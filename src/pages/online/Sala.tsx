@@ -551,7 +551,7 @@ function RoomSettings({
   return (
     <section className="flex flex-col gap-3">
       <div className="flex flex-col gap-1.5">
-        <div className="font-display font-bold text-base text-gold">{t("settings.cames_to_win")}</div>
+        <div className="font-display font-bold text-base text-white">{t("settings.cames_to_win")}</div>
         <div className="grid grid-cols-3 gap-2">
           {CAMES_OPTS.map((v) => (
             <Chip key={v} selected={targetCames === v} disabled={busy} onClick={() => apply({ targetCames: v })} label={v === 1 ? t("sala.cama_singular", { n: v }) : t("sala.cama_plural", { n: v })} />
@@ -559,7 +559,7 @@ function RoomSettings({
         </div>
       </div>
       <div className="flex flex-col gap-1.5">
-        <div className="font-display font-bold text-base text-gold">{t("settings.piedras_per_cama")}</div>
+        <div className="font-display font-bold text-base text-white">{t("settings.piedras_per_cama")}</div>
         <div className="grid grid-cols-2 gap-2">
           {TARGET_CAMA_OPTS.map((v) => (
             <Chip key={v} selected={targetCama === v} disabled={busy} onClick={() => apply({ targetCama: v })} label={t("sala.points", { n: v })} />
@@ -567,7 +567,7 @@ function RoomSettings({
         </div>
       </div>
       <div className="flex flex-col gap-1.5">
-        <div className="font-display font-bold text-base text-gold">{t("sala.waiting_time_turn")}</div>
+        <div className="font-display font-bold text-base text-white">{t("sala.waiting_time_turn")}</div>
         <div className="grid grid-cols-4 gap-2">
           {TURN_TIMEOUT_OPTS.map((sec) => (
             <Chip key={sec} selected={turnTimeoutSec === sec} disabled={busy} onClick={() => apply({ turnTimeoutSec: sec })} label={`${sec}s`} />

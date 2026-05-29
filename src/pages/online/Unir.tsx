@@ -80,7 +80,7 @@ function UnirSala() {
         )}
 
         <section className="flex flex-col gap-1.5">
-          <div className="font-display font-bold text-base text-gold">
+          <div className="font-display font-bold text-base text-white">
             {t("unir.code_label")}
           </div>
           <Input
