@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "@/lib/router-shim";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ClientOnly } from "@/components/ClientOnly";
 import { Button } from "@/components/ui/button";
 import { usePlayerIdentity } from "@/hooks/usePlayerIdentity";
@@ -97,12 +97,15 @@ function Sala() {
     }
   }, [data, code, navigate]);
 
-  // Si l'amfitrió tanca la pestanya, abandona la taula (beacon)
+  // Si el jugador tanca la pestanya, abandona la taula (beacon) per a qualsevol
+  // jugador assegut, no només l'amfitrió. Així el seient queda lliure i si era
+  // l'únic ocupant, el servidor pot marcar la taula com a abandonada.
   const roomIdForUnload = data?.room.id;
   const roomStatusForUnload = data?.room.status;
-  const isHostForUnload = data?.room.hostDevice === deviceId;
+  const mySeatForUnload = data?.mySeat;
   useEffect(() => {
-    if (!roomIdForUnload || !isHostForUnload || roomStatusForUnload === "finished" || roomStatusForUnload === "abandoned") return;
+    if (!roomIdForUnload || mySeatForUnload == null) return;
+    if (roomStatusForUnload === "finished" || roomStatusForUnload === "abandoned") return;
     const handleUnload = () => {
       const baseUrl = (import.meta.env.VITE_SUPABASE_URL as string | undefined) ?? "https://sgonrrtqdcwyajsmufhs.supabase.co";
       const url = `${baseUrl}/functions/v1/rooms-rpc`;
@@ -117,7 +120,28 @@ function Sala() {
       window.removeEventListener("pagehide", handleUnload);
       window.removeEventListener("beforeunload", handleUnload);
     };
-  }, [roomIdForUnload, roomStatusForUnload, isHostForUnload, deviceId]);
+  }, [roomIdForUnload, roomStatusForUnload, mySeatForUnload, deviceId]);
+
+  // Cleanup en navegar fora de la pantalla (SPA): si encara estic assegut en
+  // una taula en lobby, allibera el seient. Així mai queda un seient zombi
+  // quan l'usuari torna enrere, navega a una altra ruta, o hi ha un error
+  // que el redirigeix.
+  const leaveOnUnmountRef = useRef<{ roomId: string; status: string; seated: boolean } | null>(null);
+  useEffect(() => {
+    leaveOnUnmountRef.current = data
+      ? { roomId: data.room.id, status: data.room.status, seated: data.mySeat != null }
+      : null;
+  }, [data]);
+  useEffect(() => {
+    return () => {
+      const snap = leaveOnUnmountRef.current;
+      if (!snap || !snap.seated) return;
+      if (snap.status !== "lobby") return;
+      // Fire and forget: alliberem el seient en abandonar la pantalla.
+      leaveRoom({ data: { roomId: snap.roomId, deviceId } }).catch(() => { /* noop */ });
+    };
+  }, [deviceId]);
+
 
   const humanDeviceIds = (data?.players ?? [])
     .filter((p) => data?.room.seatKinds[p.seat] === "human" && !!p.deviceId)
