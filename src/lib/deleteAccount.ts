@@ -25,6 +25,39 @@ export async function requestAccountDeletion(args: {
 }): Promise<DeleteAccountResult> {
   const { deviceId, dryRun = false } = args;
   if (!deviceId) throw new Error("deviceId requerit");
+
+  // Dry-run: compte directament contra la BD (no depèn de cap Edge Function).
+  if (dryRun) {
+    const countFor = async (
+      table: "player_profiles" | "room_players" | "sala_chat" | "room_text_chat",
+    ): Promise<number> => {
+      const { count, error } = await supabase
+        .from(table)
+        .select("device_id", { count: "exact", head: true })
+        .eq("device_id", deviceId);
+      if (error) return 0;
+      return count ?? 0;
+    };
+    const [pp, rp, sc, rtc] = await Promise.all([
+      countFor("player_profiles"),
+      countFor("room_players"),
+      countFor("sala_chat"),
+      countFor("room_text_chat"),
+    ]);
+    return {
+      ok: true,
+      dryRun: true,
+      deleted: {
+        player_profiles: pp,
+        room_players: rp,
+        sala_chat: sc,
+      },
+      anonymized: {
+        room_text_chat: rtc,
+      },
+    };
+  }
+
   const { data, error } = await supabase.functions.invoke("delete-account", {
     body: { deviceId, dryRun },
   });
