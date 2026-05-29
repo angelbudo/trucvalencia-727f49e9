@@ -62,7 +62,7 @@ const Index = () => {
               Truc Valencià
             </h1>
           </div>
-          <p className="mt-3 text-sm text-muted-foreground">
+          <p className="mt-3 text-sm text-[#c2b9a3]">
             {playerName ? `${playerName}, ` : ""}
             {playerName
               ? t("home.subtitle").charAt(0).toLowerCase() + t("home.subtitle").slice(1)

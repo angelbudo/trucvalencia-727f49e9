@@ -137,7 +137,7 @@ function NovaSala() {
           </div>
           <header className="text-center">
             <h1 className="font-title font-black italic text-gold text-3xl pr-2 text-center">{t("nou.create_online")}</h1>
-            <p className="mt-1 text-sm text-muted-foreground">{t("nou.need_name_create")}</p>
+            <p className="mt-1 text-sm text-[#c2b9a3]">{t("nou.need_name_create")}</p>
           </header>
           <Button
             size="lg"

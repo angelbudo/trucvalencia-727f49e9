@@ -72,7 +72,7 @@ function UnirSala() {
 
         {!hasName && (
           <section className="px-1 py-2 flex items-center justify-between gap-3">
-            <p className="text-xs text-foreground">{t("unir.need_name")}</p>
+            <p className="text-xs text-[#c2b9a3]">{t("unir.need_name")}</p>
             <Button size="sm" variant="outline" onClick={() => navigate("/ajustes")} className="border-primary/40">
               <Settings className="w-3 h-3 mr-1" /> {t("home.settings")}
             </Button>

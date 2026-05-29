@@ -291,7 +291,7 @@ function Sala() {
               {copied ? <Check className="w-5 h-5 text-team-nos" /> : <Copy className="w-5 h-5 text-primary/70" />}
             </button>
           </div>
-          <p className="text-[11px] text-muted-foreground">{t("sala.share_code")}</p>
+          <p className="text-[11px] text-[#c2b9a3]">{t("sala.share_code")}</p>
         </header>
 
         {!hasName && (
