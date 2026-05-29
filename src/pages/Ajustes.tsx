@@ -86,7 +86,7 @@ function Ajustes() {
   ];
 
   return (
-    <main className="menu-screen min-h-screen flex flex-col items-center justify-center px-4 py-5">
+    <main className="menu-screen min-h-screen flex flex-col items-center justify-center py-5 px-[9px]">
       <div className="w-full max-w-md flex flex-col gap-3">
         <div className="flex items-center justify-between">
           <ShareAppButton />
