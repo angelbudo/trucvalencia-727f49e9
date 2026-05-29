@@ -172,8 +172,8 @@ function PerfilInner() {
             </section>
 
             <section className="flex flex-col gap-3 mt-2">
-              <div className="font-title font-bold text-base text-gold flex items-center gap-1.5">
-                <Users className="w-4 h-4" /> <span>Amics</span>
+              <div className="font-title font-bold text-base text-white flex items-center gap-1.5 [&>span]:!font-[Cinzel,serif]">
+                <Users className="w-4 h-4 text-white" /> Amics
               </div>
 
               <div className="flex gap-2">
@@ -190,10 +190,10 @@ function PerfilInner() {
               </div>
 
               <Tabs defaultValue="amics">
-                <TabsList className="grid grid-cols-3 w-full">
-                  <TabsTrigger value="amics" className="text-slate-100">Amics ({friends.accepted.length})</TabsTrigger>
-                  <TabsTrigger value="rebudes" className="text-slate-100">Rebudes ({friends.incoming.length})</TabsTrigger>
-                  <TabsTrigger value="enviades" className="text-slate-100">Enviades ({friends.outgoing.length})</TabsTrigger>
+                <TabsList className="flex justify-between w-full h-auto rounded-xl">
+                  <TabsTrigger value="amics" className="text-slate-100 py-1 px-2 w-auto flex-none">Amics ({friends.accepted.length})</TabsTrigger>
+                  <TabsTrigger value="rebudes" className="text-slate-100 py-1 px-2 w-auto flex-none">Rebudes ({friends.incoming.length})</TabsTrigger>
+                  <TabsTrigger value="enviades" className="text-slate-100 py-1 px-2 w-auto flex-none">Enviades ({friends.outgoing.length})</TabsTrigger>
                 </TabsList>
 
                 <TabsContent value="amics" className="avatar-scroll max-h-[45vh] overflow-y-auto pr-2 space-y-2 mt-3">
