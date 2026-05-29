@@ -96,7 +96,7 @@ export function AvatarPicker({ userId, currentUrl, displayName, onChanged }: Pro
       </DialogTrigger>
       <DialogContent className="w-[90vw] sm:max-w-md max-h-[85vh] overflow-y-auto rounded-2xl border-primary/30">
         <DialogHeader>
-          <DialogTitle className="text-gold font-title font-black italic">Foto de perfil</DialogTitle>
+          <DialogTitle className="text-gold font-title font-black italic text-2xl text-center">Foto de perfil</DialogTitle>
         </DialogHeader>
 
         <div className="flex flex-col gap-4">
@@ -106,6 +106,7 @@ export function AvatarPicker({ userId, currentUrl, displayName, onChanged }: Pro
               variant="outline"
               disabled={busy}
               onClick={() => cameraRef.current?.click()}
+              className="bg-team-nos text-background hover:bg-team-nos/90 border-transparent"
             >
               <Camera className="w-4 h-4 mr-2" /> Càmera
             </Button>
@@ -114,6 +115,7 @@ export function AvatarPicker({ userId, currentUrl, displayName, onChanged }: Pro
               variant="outline"
               disabled={busy}
               onClick={() => galleryRef.current?.click()}
+              className="bg-accent text-accent-foreground hover:bg-accent/90 border-transparent"
             >
               <ImageIcon className="w-4 h-4 mr-2" /> Galeria
             </Button>
@@ -143,7 +145,7 @@ export function AvatarPicker({ userId, currentUrl, displayName, onChanged }: Pro
           </div>
 
           <div>
-            <div className="text-[10px] font-sans tracking-widest uppercase text-primary/85 mb-2">
+            <div className="font-title font-bold text-base text-white mb-2 [&]:!font-[Cinzel,serif]">
               O tria un avatar
             </div>
             <div className="avatar-scroll max-h-[50vh] overflow-y-auto pr-2">
